@@ -11,7 +11,7 @@ services:
   proxy:
     image: henriquegemignani/home-server-nginx
     restart: always
-    hosts:
+    extra_hosts:
         - home-assistant: 172.17.0.1
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
