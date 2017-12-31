@@ -11,8 +11,8 @@ services:
   proxy:
     image: henriquegemignani/home-server-nginx
     restart: always
-    links:
-      - home-assistant:home-assistant
+    hosts:
+        - home-assistant: 172.17.0.1
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/docker-www/acme-challenge:/var/acme-challenge:ro
