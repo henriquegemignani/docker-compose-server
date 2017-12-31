@@ -1,6 +1,6 @@
 version: '2'
 services:
-  homeassistant:
+  home-assistant:
     image: homeassistant/home-assistant
     restart: always
     network_mode: host
