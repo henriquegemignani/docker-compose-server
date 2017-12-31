@@ -11,11 +11,9 @@ services:
   proxy:
     image: henriquegemignani/home-server-nginx
     restart: always
+    network_mode: host
     extra_hosts:
-        - home-assistant: 172.17.0.1
+      - "home-assistant:172.17.0.1"
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/docker-www/acme-challenge:/var/acme-challenge:ro
-    ports:
-      - 80:80
-      - 443:443
