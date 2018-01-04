@@ -1,9 +1,13 @@
-version: '2'
+version: '3'
 services:
+  zoneminder:
+    image: quantumobject/docker-zoneminder
+    restart: always
+    shm_size: 4096m
+
   home-assistant:
     image: homeassistant/home-assistant
     restart: always
-    network_mode: host
     volumes:
       - /var/docker-www/homeassistant-config:/config
       - /etc/localtime:/etc/localtime:ro
@@ -11,9 +15,11 @@ services:
   proxy:
     image: henriquegemignani/home-server-nginx
     restart: always
-    network_mode: host
-    extra_hosts:
-      - "home-assistant:172.17.0.1"
+    links:
+      - zoneminder:zoneminder
+      - home-assistant:home-assistant
+    ports:
+      - 443:443
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/docker-www/acme-challenge:/var/acme-challenge:ro
