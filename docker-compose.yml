@@ -12,6 +12,8 @@ services:
     image: henriquegemignani/home-server-zoneminder
     restart: always
     shm_size: 4096m
+    environment:
+      TIMEZONE: America/Sao_Paulo
     links:
       - db:db
     volumes:
