@@ -4,7 +4,7 @@ services:
     image: mysql
     restart: always
     env_file:
-      - /var/home-server/secrets/mysql
+      - /var/home-server/secrets/mysql.env
     volumes:
       - /var/home-server/mysql:/var/lib/mysql
 
@@ -16,7 +16,7 @@ services:
       - db:db
     volumes:
       - /var/home-server/zoneminder:/var/cache/zoneminder
-      - /var/home-server/zoneminder/mysql:/run/secrets/zoneminder
+      - /var/home-server/secrets/zoneminder:/run/secrets/zoneminder
 
   home-assistant:
     image: homeassistant/home-assistant
