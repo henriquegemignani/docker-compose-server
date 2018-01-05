@@ -3,10 +3,9 @@ services:
   db:
     image: mysql
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql/root
+    env_file:
+      - /var/home-server/secrets/mysql
     volumes:
-      - /var/home-server/secrets/mysql:/run/secrets/mysql
       - /var/home-server/mysql:/var/lib/mysql
 
   zoneminder:
