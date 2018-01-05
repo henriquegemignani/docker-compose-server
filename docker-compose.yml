@@ -1,15 +1,29 @@
 version: '3'
 services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql/root
+    volumes:
+      - /var/home-server/secrets/mysql:/run/secrets/mysql
+      - /var/home-server/mysql:/var/lib/mysql
+
   zoneminder:
-    image: quantumobject/docker-zoneminder
+    image: henriquegemignani/home-server-zoneminder
     restart: always
     shm_size: 4096m
+    links:
+      - db:db
+    volumes:
+      - /var/home-server/zoneminder:/var/cache/zoneminder
+      - /var/home-server/zoneminder/mysql:/run/secrets/zoneminder
 
   home-assistant:
     image: homeassistant/home-assistant
     restart: always
     volumes:
-      - /var/docker-www/homeassistant-config:/config
+      - /var/home-server/homeassistant-config:/config
       - /etc/localtime:/etc/localtime:ro
 
   proxy:
@@ -22,4 +36,3 @@ services:
       - 443:443
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
-      - /var/docker-www/acme-challenge:/var/acme-challenge:ro
