@@ -24,6 +24,8 @@ services:
   home-assistant:
     image: homeassistant/home-assistant
     restart: always
+    links:
+      - zoneminder:zoneminder
     volumes:
       - /var/home-server/homeassistant-config:/config
       - /etc/localtime:/etc/localtime:ro
