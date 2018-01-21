@@ -1,12 +1,13 @@
 version: '3'
 services:
   db:
-    image: mysql
+    image: mariadb
     restart: always
     env_file:
       - /var/home-server/secrets/mysql.env
     volumes:
       - /var/home-server/mysql:/var/lib/mysql
+      - ./custom-mysqld.cnf:/etc/mysql/conf.d/custom-mysqld.cnf:ro
 
   zoneminder:
     image: henriquegemignani/home-server-zoneminder
