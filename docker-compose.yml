@@ -30,6 +30,21 @@ services:
       - /var/home-server/homeassistant-config:/config
       - /etc/localtime:/etc/localtime:ro
 
+  ftp:
+    image: stilliard/pure-ftpd:hardened
+    restart: always
+    ports:
+      - 21:21
+      - 30000-30009:30000-30009
+    environment:
+      PUBLICHOST: farrosh
+    volumes:
+      - /home/home-server:/home/ftpusers
+      - /var/home-server/secrets/ftp-passwd:/etc/pure-ftpd/passwd
+      - /var/home-server/ftp/ssl:/etc/ssl/private
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+
+
   proxy:
     image: henriquegemignani/home-server-nginx
     restart: always
