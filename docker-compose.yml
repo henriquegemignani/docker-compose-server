@@ -44,6 +44,21 @@ services:
       - /var/home-server/ftp/ssl:/etc/ssl/private
       - /etc/letsencrypt:/etc/letsencrypt:ro
 
+  samba:
+    image: dperson/samba
+    restart: always
+    ports:
+      - "139:139"
+      - "445:445"
+    environment:
+      USERID: 1000
+      GROUPID: 1000
+    volumes:
+      - /home/home-server:/mount
+      - /var/home-server/secrets/samba:/config
+    command: |-
+        -i "/config/smbpasswd"
+        -s "public;/mount/shared;yes;yes;yes;all;admin;admin"
 
   proxy:
     image: henriquegemignani/home-server-nginx
