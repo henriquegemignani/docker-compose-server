@@ -60,6 +60,21 @@ services:
         -i "/config/smbpasswd"
         -s "public;/mount/shared;yes;yes;yes;all;admin;admin"
 
+  torrent:
+    image: dperson/transmission
+    restart: always
+    ports:
+      - "9091:9091"
+    environment:
+      USERID: 1000
+      GROUPID: 1000
+    volumes:
+      - /home/home-server/torrents/info:/var/lib/transmission-daemon/info
+      - /home/home-server/shared/downloads:/var/lib/transmission-daemon/downloads
+      - /home/home-server/torrents/incomplete:/var/lib/transmission-daemon/incomplete
+    command: |-
+        -n
+
   proxy:
     image: henriquegemignani/home-server-nginx
     restart: always
